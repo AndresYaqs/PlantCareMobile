@@ -49,7 +49,7 @@
                             HorizontalOptions="Start">
                         <HorizontalStackLayout Spacing="10"
                                                Margin="10,0,10,0">
-                            <Image Source="newuser_icon.png"
+                            <Image Source="verified_icon.png"
                                    WidthRequest="20"
                                    HeightRequest="20" />
                             <Label Text="Verificado"

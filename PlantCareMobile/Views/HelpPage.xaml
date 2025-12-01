@@ -7,8 +7,8 @@
              Shell.BackgroundColor="#101928"
              BackgroundColor="#101928">
     <ScrollView>
-        <StackLayout>
-            <!--QUE ES PLANTCARE?-->
+        <StackLayout Orientation="Vertical">
+            <!--¿Qué es PlantCare?-->
             <Border StrokeShape="RoundRectangle 12"
                     StrokeThickness="0"
                     Padding="20"
@@ -16,21 +16,23 @@
 
                 <VerticalStackLayout Spacing="12">
 
-                    <HorizontalStackLayout Spacing="10"
-                                           VerticalOptions="Center">
-                        <Image Source="leaf_icon.png"
+                    <Grid ColumnDefinitions="Auto, *"
+                          ColumnSpacing="10"
+                          VerticalOptions="Center">
+                        <Image Source="plant_help_icon.png"
                                HeightRequest="22"
                                WidthRequest="22"
                                VerticalOptions="Center">
 
                         </Image>
 
-                        <Label Text="¿Qué es PlantCare?"
+                        <Label Grid.Column="1"
+                               Text="¿Qué es PlantCare?"
                                TextColor="#05DF73"
                                FontSize="20"
                                FontAttributes="Bold"
                                VerticalOptions="Center" />
-                    </HorizontalStackLayout>
+                    </Grid>
 
                     <Label Text="PlantCare es una app con IA para identificar plantas, guardarlas en tu colección y recibir consejos de cuidado personalizados."
                            TextColor="#E5E7EB"
@@ -44,36 +46,418 @@
                              Margin="0,10,0,0" />
                 </VerticalStackLayout>
             </Border>
+
+            <!--¿Cómo identifico una planta?-->
+            <Border StrokeShape="RoundRectangle 12"
+                    StrokeThickness="0"
+                    Padding="20"
+                    Margin="0,0,0,20">
+
+                <VerticalStackLayout Spacing="12">
+
+                    <Grid ColumnDefinitions="Auto, *"
+                          ColumnSpacing="10"
+                          VerticalOptions="Center">
+                        <Image Source="camera_help_icon.png"
+                               HeightRequest="22"
+                               WidthRequest="22"
+                               VerticalOptions="Center">
+
+                        </Image>
+
+                        <Label Grid.Column="1"
+                               Text="¿Cómo identifico una planta?"
+                               TextColor="#05DF73"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center" />
+                    </Grid>
+
+                    <Label Text="Usa el “Identificador de Plantas” en el panel principal. Sube una foto nítida y la IA te dará su nombre y cuidados."
+                           TextColor="#E5E7EB"
+                           FontSize="14"
+                           LineHeight="1.2" />
+
+                    <BoxView HeightRequest="1"
+                             Color="#05DF73"
+                             Opacity="0.5"
+                             HorizontalOptions="Fill"
+                             Margin="0,10,0,0" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!--¿Cómo agrego una planta a mi colección?-->
+            <Border StrokeShape="RoundRectangle 12"
+                    StrokeThickness="0"
+                    Padding="20"
+                    Margin="0,0,0,20">
+
+                <VerticalStackLayout Spacing="12">
+
+                    <Grid ColumnDefinitions="Auto, *"
+                          ColumnSpacing="10"
+                          VerticalOptions="Center">
+                        <Image Source="add_help_icon.png"
+                               HeightRequest="22"
+                               WidthRequest="22"
+                               VerticalOptions="Center">
+
+                        </Image>
+
+                        <Label Grid.Column="1"
+                               Text="¿Cómo agrego una planta a mi colección?"
+                               TextColor="#7BF1A8"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center" />
+                    </Grid>
+
+                    <Label Text='Tras identificarla, pulsa "Guardar en Mis Plantas". Personaliza sus datos (nombre, ubicación, riego) y se añadirá a tu colección.'
+                           TextColor="#E5E7EB"
+                           FontSize="14"
+                           LineHeight="1.2" />
+
+                    <BoxView HeightRequest="1"
+                             Color="#05DF73"
+                             Opacity="0.5"
+                             HorizontalOptions="Fill"
+                             Margin="0,10,0,0" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!--¿Puedo editar la información de mis plantas?-->
+            <Border StrokeShape="RoundRectangle 12"
+                    StrokeThickness="0"
+                    Padding="20"
+                    Margin="0,0,0,20">
+
+                <VerticalStackLayout Spacing="12">
+
+                    <Grid ColumnDefinitions="Auto, *"
+                          ColumnSpacing="10"
+                          VerticalOptions="Center">
+                        <Image Source="edit_help_icon.png"
+                               HeightRequest="22"
+                               WidthRequest="22"
+                               VerticalOptions="Center">
+
+                        </Image>
+
+                        <Label Grid.Column="1"
+                               Text="¿Puedo editar la información de mis plantas?"
+                               TextColor="#DAB2FF"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center" />
+                    </Grid>
+
+                    <Label Text='Sí. Haz clic en el ícono de editar (✏️) en la tarjeta de la planta para cambiar su nombre, foto, riego y más.'
+                           TextColor="#E5E7EB"
+                           FontSize="14"
+                           LineHeight="1.2" />
+
+                    <BoxView HeightRequest="1"
+                             Color="#05DF73"
+                             Opacity="0.5"
+                             HorizontalOptions="Fill"
+                             Margin="0,10,0,0" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!--¿Cómo funcionan los recordatorios?-->
+            <Border StrokeShape="RoundRectangle 12"
+                    StrokeThickness="0"
+                    Padding="20"
+                    Margin="0,0,0,20">
+
+                <VerticalStackLayout Spacing="12">
+
+                    <Grid ColumnDefinitions="Auto, *"
+                          ColumnSpacing="10"
+                          VerticalOptions="Center">
+                        <Image Source="reminder_help_icon.png"
+                               HeightRequest="22"
+                               WidthRequest="22"
+                               VerticalOptions="Center">
+
+                        </Image>
+
+                        <Label Grid.Column="1"
+                               Text="¿Cómo funcionan los recordatorios?"
+                               TextColor="#8EC5FF"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center" />
+                    </Grid>
+
+                    <Label Text='La app calcula cuándo regar tus plantas según la frecuencia que establezcas y te muestra recordatorios urgentes.'
+                           TextColor="#E5E7EB"
+                           FontSize="14"
+                           LineHeight="1.2" />
+
+                    <BoxView HeightRequest="1"
+                             Color="#05DF73"
+                             Opacity="0.5"
+                             HorizontalOptions="Fill"
+                             Margin="0,10,0,0" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!--¿Cómo funciona la galería?-->
+            <Border StrokeShape="RoundRectangle 12"
+                    StrokeThickness="0"
+                    Padding="20"
+                    Margin="0,0,0,20">
+
+                <VerticalStackLayout Spacing="12">
+
+                    <Grid ColumnDefinitions="Auto, *"
+                          ColumnSpacing="10"
+                          VerticalOptions="Center">
+                        <Image Source="gallery_help_icon.png"
+                               HeightRequest="22"
+                               WidthRequest="22"
+                               VerticalOptions="Center">
+
+                        </Image>
+
+                        <Label Grid.Column="1"
+                               Text="¿Cómo funciona la galería?"
+                               TextColor="#FFDF20"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center" />
+                    </Grid>
+
+                    <Label Text='La galería muestra las fotos de tus plantas. Es una forma visual de explorar tu colección personal.'
+                           TextColor="#E5E7EB"
+                           FontSize="14"
+                           LineHeight="1.2" />
+
+                    <BoxView HeightRequest="1"
+                             Color="#05DF73"
+                             Opacity="0.5"
+                             HorizontalOptions="Fill"
+                             Margin="0,10,0,0" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!--¿Puedo ver los detalles de una planta?-->
+            <Border StrokeShape="RoundRectangle 12"
+                    StrokeThickness="0"
+                    Padding="20"
+                    Margin="0,0,0,20">
+                <VerticalStackLayout Spacing="12">
+                    <Grid ColumnDefinitions="Auto, *"
+                          ColumnSpacing="10"
+                          VerticalOptions="Center">
+                        <Image Source="search_help_icon.png"
+                               HeightRequest="22"
+                               WidthRequest="22"
+                               VerticalOptions="Center" />
+                        <Label Grid.Column="1"
+                               Text="¿Puedo ver los detalles de una planta?"
+                               TextColor="#FFA500"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center" />
+                    </Grid>
+                    <Label Text="Sí, haz clic en cualquier planta de tu colección para ver su información detallada y notas personales."
+                           TextColor="#E5E7EB"
+                           FontSize="14"
+                           LineHeight="1.2" />
+                    <BoxView HeightRequest="1"
+                             Color="#05DF73"
+                             Opacity="0.5"
+                             HorizontalOptions="Fill"
+                             Margin="0,10,0,0" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!--¿Cómo recupero mi contraseña?-->
+            <Border StrokeShape="RoundRectangle 12"
+                    StrokeThickness="0"
+                    Padding="20"
+                    Margin="0,0,0,20">
+                <VerticalStackLayout Spacing="12">
+                    <Grid ColumnDefinitions="Auto, *"
+                          ColumnSpacing="10"
+                          VerticalOptions="Center">
+                        <Image Source="key_help_icon.png"
+                               HeightRequest="22"
+                               WidthRequest="22"
+                               VerticalOptions="Center" />
+                        <Label Grid.Column="1"
+                               Text="¿Cómo recupero mi contraseña?"
+                               TextColor="#05DF73"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center" />
+                    </Grid>
+                    <Label Text='En la pantalla de login, haz clic en "¿Olvidaste tu contraseña?" e ingresa tu correo para recibir un enlace de recuperación.'
+                           TextColor="#E5E7EB"
+                           FontSize="14"
+                           LineHeight="1.2" />
+                    <BoxView HeightRequest="1"
+                             Color="#05DF73"
+                             Opacity="0.5"
+                             HorizontalOptions="Fill"
+                             Margin="0,10,0,0" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!--¿Puedo personalizar mi perfil?-->
+            <Border StrokeShape="RoundRectangle 12"
+                    StrokeThickness="0"
+                    Padding="20"
+                    Margin="0,0,0,20">
+                <VerticalStackLayout Spacing="12">
+                    <Grid ColumnDefinitions="Auto, *"
+                          ColumnSpacing="10"
+                          VerticalOptions="Center">
+                        <Image Source="user_help_icon.png"
+                               HeightRequest="22"
+                               WidthRequest="22"
+                               VerticalOptions="Center" />
+                        <Label Grid.Column="1"
+                               Text="¿Puedo personalizar mi perfil?"
+                               TextColor="#3B82F6"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center" />
+                    </Grid>
+                    <Label Text='Sí, en "Perfil" puedes cambiar tu foto, información personal y preferencias de la app.'
+                           TextColor="#E5E7EB"
+                           FontSize="14"
+                           LineHeight="1.2" />
+                    <BoxView HeightRequest="1"
+                             Color="#05DF73"
+                             Opacity="0.5"
+                             HorizontalOptions="Fill"
+                             Margin="0,10,0,0" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!--¿Dónde está la configuración?-->
+            <Border StrokeShape="RoundRectangle 12"
+                    StrokeThickness="0"
+                    Padding="20"
+                    Margin="0,0,0,20">
+                <VerticalStackLayout Spacing="12">
+                    <Grid ColumnDefinitions="Auto, *"
+                          ColumnSpacing="10"
+                          VerticalOptions="Center">
+                        <Image Source="settings_help_icon.png"
+                               HeightRequest="22"
+                               WidthRequest="22"
+                               VerticalOptions="Center" />
+                        <Label Grid.Column="1"
+                               Text="¿Dónde está la configuración?"
+                               TextColor="#5D87FF"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center" />
+                    </Grid>
+                    <Label Text='En "Configuración" puedes gestionar tus preferencias, notificaciones y privacidad.'
+                           TextColor="#E5E7EB"
+                           FontSize="14"
+                           LineHeight="1.2" />
+                    <BoxView HeightRequest="1"
+                             Color="#05DF73"
+                             Opacity="0.5"
+                             HorizontalOptions="Fill"
+                             Margin="0,10,0,0" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!--¿Problemas para iniciar sesión?-->
+            <Border StrokeShape="RoundRectangle 12"
+                    StrokeThickness="0"
+                    Padding="20"
+                    Margin="0,0,0,20">
+                <VerticalStackLayout Spacing="12">
+                    <Grid ColumnDefinitions="Auto, *"
+                          ColumnSpacing="10"
+                          VerticalOptions="Center">
+                        <Image Source="warning_help_icon.png"
+                               HeightRequest="22"
+                               WidthRequest="22"
+                               VerticalOptions="Center" />
+                        <Label Grid.Column="1"
+                               Text="¿Problemas para iniciar sesión?"
+                               TextColor="#FF6B6B"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center" />
+                    </Grid>
+                    <Label Text="Verifica tus datos. Si no funciona, recupera tu contraseña. Asegúrate de haber verificado tu cuenta por correo."
+                           TextColor="#E5E7EB"
+                           FontSize="14"
+                           LineHeight="1.2" />
+                    <BoxView HeightRequest="1"
+                             Color="#05DF73"
+                             Opacity="0.5"
+                             HorizontalOptions="Fill"
+                             Margin="0,10,0,0" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!--¿Cómo elimino una planta?-->
+            <Border StrokeShape="RoundRectangle 12"
+                    StrokeThickness="0"
+                    Padding="20"
+                    Margin="0,0,0,20">
+                <VerticalStackLayout Spacing="12">
+                    <Grid ColumnDefinitions="Auto, *"
+                          ColumnSpacing="10"
+                          VerticalOptions="Center">
+                        <Image Source="trash_help_icon.png"
+                               HeightRequest="22"
+                               WidthRequest="22"
+                               VerticalOptions="Center" />
+                        <Label Grid.Column="1"
+                               Text="¿Cómo elimino una planta?"
+                               TextColor="#FF6B6B"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center" />
+                    </Grid>
+                    <Label Text="Haz clic en el ícono de basura ( 🗑 ) en la tarjeta de la planta y confirma. La eliminación es permanente."
+                           TextColor="#E5E7EB"
+                           FontSize="14"
+                           LineHeight="1.2" />
+                    <BoxView HeightRequest="1"
+                             Color="#05DF73"
+                             Opacity="0.5"
+                             HorizontalOptions="Fill"
+                             Margin="0,10,0,0" />
+                </VerticalStackLayout>
+            </Border>
             
-            <!--COMO IDENTIFICO UNA PLANTA?-->
+            <!--¿Cómo cierro sesión?-->
             <Border StrokeShape="RoundRectangle 12"
                     StrokeThickness="0"
                     Padding="20"
                     Margin="0,0,0,20">
-
                 <VerticalStackLayout Spacing="12">
-
-                    <HorizontalStackLayout Spacing="10"
-                                           VerticalOptions="Center">
-                        <Image Source="leaf_icon.png"
+                    <Grid ColumnDefinitions="Auto, *"
+                          ColumnSpacing="10"
+                          VerticalOptions="Center">
+                        <Image Source="logout_help_icon.png"
                                HeightRequest="22"
                                WidthRequest="22"
-                               VerticalOptions="Center">
-
-                        </Image>
-
-                        <Label Text="¿Cómo identifico una planta?"
-                               TextColor="#05DF73"
+                               VerticalOptions="Center" />
+                        <Label Grid.Column="1"
+                               Text="¿Cómo cierro sesión?"
+                               TextColor="#9CA3AF"
                                FontSize="20"
                                FontAttributes="Bold"
                                VerticalOptions="Center" />
-                    </HorizontalStackLayout>
-
-                    <Label Text="Usa el “Identificador de Plantas” en el panel principal. Sube una foto nítida y la IA te dará su nombre y cuidados."
+                    </Grid>
+                    <Label Text='Haz clic en "Cerrar Sesión" en el menú lateral.'
                            TextColor="#E5E7EB"
                            FontSize="14"
                            LineHeight="1.2" />
-
                     <BoxView HeightRequest="1"
                              Color="#05DF73"
                              Opacity="0.5"
@@ -82,34 +466,30 @@
                 </VerticalStackLayout>
             </Border>
 
-            <!--COMO AGREGO UNA PLANTA A MI COLECCION?-->
+            <!--¿Dónde encuentro tips de cuidado?-->
             <Border StrokeShape="RoundRectangle 12"
                     StrokeThickness="0"
                     Padding="20"
                     Margin="0,0,0,20">
-
                 <VerticalStackLayout Spacing="12">
-
-                    <HorizontalStackLayout Spacing="10"
-                                           VerticalOptions="Center">
-                        <Image Source="leaf_icon.png"
+                    <Grid ColumnDefinitions="Auto, *"
+                          ColumnSpacing="10"
+                          VerticalOptions="Center">
+                        <Image Source="bulb_help_icon.png"
                                HeightRequest="22"
                                WidthRequest="22"
-                               VerticalOptions="Center">
-
-                        </Image>
-                            <Label Text="¿Cómo agrego una planta a mi colección?"
-                               TextColor="#05DF73"
+                               VerticalOptions="Center" />
+                        <Label Grid.Column="1"
+                               Text="¿Dónde encuentro tips de cuidado?"
+                               TextColor="#FFDF20"
                                FontSize="20"
                                FontAttributes="Bold"
                                VerticalOptions="Center" />
-                    </HorizontalStackLayout>
-
-                    <Label Text="Usa el “Identificador de Plantas” en el panel principal. Sube una foto nítida y la IA te dará su nombre y cuidados."
+                    </Grid>
+                    <Label Text='En las secciones "Tips" y "Recordatorios" encontrarás consejos generales y personalizados.'
                            TextColor="#E5E7EB"
                            FontSize="14"
                            LineHeight="1.2" />
-
                     <BoxView HeightRequest="1"
                              Color="#05DF73"
                              Opacity="0.5"
@@ -117,6 +497,103 @@
                              Margin="0,10,0,0" />
                 </VerticalStackLayout>
             </Border>
+
+            <!--¿Qué datos se guardan de mis plantas?-->
+            <Border StrokeShape="RoundRectangle 12"
+                    StrokeThickness="0"
+                    Padding="20"
+                    Margin="0,0,0,20">
+                <VerticalStackLayout Spacing="12">
+                    <Grid ColumnDefinitions="Auto, *"
+                          ColumnSpacing="10"
+                          VerticalOptions="Center">
+                        <Image Source="data_help_icon.png"
+                               HeightRequest="22"
+                               WidthRequest="22"
+                               VerticalOptions="Center" />
+                        <Label Grid.Column="1"
+                               Text="¿Qué datos se guardan de mis plantas?"
+                               TextColor="#05DF73"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center" />
+                    </Grid>
+                    <Label Text="Guardamos su nombre, ubicación, riego, luz, notas y la foto para ayudarte a cuidarla mejor."
+                           TextColor="#E5E7EB"
+                           FontSize="14"
+                           LineHeight="1.2" />
+                    <BoxView HeightRequest="1"
+                             Color="#05DF73"
+                             Opacity="0.5"
+                             HorizontalOptions="Fill"
+                             Margin="0,10,0,0" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!--¿Es precisa la identificación por IA?-->
+            <Border StrokeShape="RoundRectangle 12"
+                    StrokeThickness="0"
+                    Padding="20"
+                    Margin="0,0,0,20">
+                <VerticalStackLayout Spacing="12">
+                    <Grid ColumnDefinitions="Auto, *"
+                          ColumnSpacing="10"
+                          VerticalOptions="Center">
+                        <Image Source="robot_help_icon.png"
+                               HeightRequest="22"
+                               WidthRequest="22"
+                               VerticalOptions="Center" />
+                        <Label Grid.Column="1"
+                               Text="¿Es precisa la identificación por IA?"
+                               TextColor="#00BFFF"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center" />
+                    </Grid>
+                    <Label Text="La IA es muy precisa, pero la calidad de la foto es clave. Para plantas raras, considera una segunda opinión."
+                           TextColor="#E5E7EB"
+                           FontSize="14"
+                           LineHeight="1.2" />
+                    <BoxView HeightRequest="1"
+                             Color="#05DF73"
+                             Opacity="0.5"
+                             HorizontalOptions="Fill"
+                             Margin="0,10,0,0" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!--¿Mis datos están seguros?-->
+            <Border StrokeShape="RoundRectangle 12"
+                    StrokeThickness="0"
+                    Padding="20"
+                    Margin="0,0,0,20">
+                <VerticalStackLayout Spacing="12">
+                    <Grid ColumnDefinitions="Auto, *"
+                          ColumnSpacing="10"
+                          VerticalOptions="Center">
+                        <Image Source="lock_help_icon.png"
+                               HeightRequest="22"
+                               WidthRequest="22"
+                               VerticalOptions="Center" />
+                        <Label Grid.Column="1"
+                               Text="¿Mis datos están seguros?"
+                               TextColor="#05DF73"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center" />
+                    </Grid>
+                    <Label Text="Sí. Usamos Firebase para proteger tus datos con seguridad de nivel empresarial. Tu información es privada y solo tú puedes acceder a ella."
+                           TextColor="#E5E7EB"
+                           FontSize="14"
+                           LineHeight="1.2" />
+                    <BoxView HeightRequest="1"
+                             Color="#05DF73"
+                             Opacity="0.5"
+                             HorizontalOptions="Fill"
+                             Margin="0,10,0,0" />
+                </VerticalStackLayout>
+            </Border>
+
         </StackLayout>
     </ScrollView>
 </ContentPage>
