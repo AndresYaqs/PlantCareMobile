@@ -1,12 +1,44 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PlantCareMobile.Views.PlantsGalleryPage"
-             Title="PlantsGalleryPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Mi Jardín">
+
+    <CollectionView x:Name="ListaPlantas"
+                    SelectionMode="Single"
+                    SelectionChanged="OnPlantaSeleccionada"
+                    Margin="10">
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Border StrokeShape="RoundRectangle 10"
+        BackgroundColor="#203042"
+        Padding="10"
+        Margin="0,5">
+
+                    <Grid ColumnDefinitions="*,Auto">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding NombreCientifico}"
+                   TextColor="White"
+                   FontAttributes="Bold"/>
+
+                            <Label Text="{Binding NombreComun}"
+                   TextColor="#A1A1A1"
+                   FontSize="12"/>
+
+                            <Label Text="{Binding FechaGuardado}"
+                   TextColor="#6B7280"
+                   FontSize="10"/>
+                        </VerticalStackLayout>
+
+                        <!-- Botón eliminar -->
+                        <Button Grid.Column="1"
+                Text="🗑"
+                BackgroundColor="Transparent"
+                TextColor="#FF6B6B"
+                FontSize="20"
+                Clicked="EliminarPlanta_Clicked"/>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
 </ContentPage>

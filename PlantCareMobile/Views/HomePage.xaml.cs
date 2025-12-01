@@ -12,12 +12,39 @@ public partial class HomePage : ContentPage
     #endregion
 
     #region Constructor
-    public HomePage()
+    private readonly PlantDatabase _db;
+
+
+    public HomePage(PlantDatabase db)
     {
         InitializeComponent();
         plantService = new PlantIdentificationService();
+        _db = db;
     }
     #endregion
+
+    private async Task CargarPlantasEnJardin()
+    {
+        var plantas = await _db.ObtenerPlantasAsync();
+        ListaPlantas.ItemsSource = plantas;
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await CargarPlantasEnJardin();
+    }
+
+    private async void IrAGaleria(object sender, TappedEventArgs e)
+    {
+        await Navigation.PushAsync(new PlantsGalleryPage(_db));
+    }
+
+    private async void VerTodos_Tapped(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(PlantsGalleryPage));
+    }
+
 
     #region Event Handlers
     private async void OnUploadAreaTapped(object sender, EventArgs e)
@@ -172,11 +199,28 @@ public partial class HomePage : ContentPage
 
     private async Task SavePlant(PlantResult plant)
     {
-        // /// Solo muestra mensaje, NO guarda nada realmente
+        if (plant?.Species == null)
+            return;
+
+        var nuevaPlanta = new Plant
+        {
+            NombreCientifico = plant.Species.ScientificNameWithoutAuthor ?? "Desconocido",
+            NombreComun = plant.Species.CommonNames?.FirstOrDefault() ?? "Sin nombre",
+            PuntajeIdentificacion = plant.Score,
+            RutaImagen = selectedImage?.FullPath ?? string.Empty,
+            FechaGuardado = DateTime.Now
+        };
+
+        await _db.AgregarPlantaAsync(nuevaPlanta);
+
         await DisplayAlert("✅ Éxito",
-            $"'{plant.Species?.ScientificNameWithoutAuthor}' guardada en tu jardín",
+            $"'{nuevaPlanta.NombreCientifico}' guardada en tu jardín",
             "OK");
+
+        await CargarPlantasEnJardin();
     }
+
+
     #endregion
 
     #region UI Helper Methods
@@ -189,4 +233,9 @@ public partial class HomePage : ContentPage
         }
     }
     #endregion
+
+
+   
+
+
 }

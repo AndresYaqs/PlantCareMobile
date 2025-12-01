@@ -129,33 +129,41 @@
 
             <!-- Resto de secciones igual... -->
             <!--Seccion "Mi Jardin"-->
-            <Border StrokeShape="RoundRectangle 15"
-                    BackgroundColor="#162032"
-                    StrokeThickness="0"
-                    Padding="20">
-                <VerticalStackLayout Spacing="15">
-                    <Grid ColumnDefinitions="*,Auto">
-                        <Label Text="🪴 Mi Jardín"
-                               TextColor="White"
-                               FontAttributes="Bold"
-                               FontSize="18" />
+            <Label Text="Mi Jardín"
+       FontSize="24"
+       FontAttributes="Bold"
+       TextColor="White" />
+            <Label Text="Ver todos →"
+       TextColor="LightBlue"
+       FontAttributes="Bold"
+       HorizontalOptions="End"
+       Margin="0,0,10,0">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="VerTodos_Tapped"/>
 
-                        <Label Grid.Column="1"
-                               Text="Ver todos →"
-                               TextColor="#60A5FA"
-                               FontSize="14">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer />
-                            </Label.GestureRecognizers>
-                        </Label>
-                    </Grid>
+                </Label.GestureRecognizers>
+            </Label>
 
-                    <Label Text="Tus plantas aparecerán aquí..."
-                           TextColor="#9CA3AF"
-                           HorizontalOptions="Center"
-                           Padding="20" />
-                </VerticalStackLayout>
-            </Border>
+            <CollectionView x:Name="ListaPlantas"
+                HeightRequest="200">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border StrokeShape="RoundRectangle 10"
+                    BackgroundColor="#203042"
+                    Padding="10"
+                    Margin="0,5">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding NombreCientifico}"
+                           TextColor="White"
+                           FontAttributes="Bold"/>
+                                <Label Text="{Binding FechaGuardado, StringFormat='{0:dd/MM/yyyy HH:mm}'}"
+                           TextColor="#A1A1A1"
+                           FontSize="12"/>
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
             <!--Seccion "Recordatorios"-->
             <Border StrokeShape="RoundRectangle 15"

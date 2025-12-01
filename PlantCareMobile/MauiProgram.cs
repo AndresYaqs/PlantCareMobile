@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Maui.Core;
 using Microsoft.Extensions.Logging;
+using PlantCareMobile.Services;
+
 
 namespace PlantCareMobile
 {
@@ -22,6 +24,12 @@ namespace PlantCareMobile
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
+            // Ruta de la BD
+            string dbPath = Path.Combine(FileSystem.AppDataDirectory, "plants.db3");
+
+            // Registrar el servicio SQLite
+            builder.Services.AddSingleton<PlantDatabase>(s => new PlantDatabase(dbPath));
+
             Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("NoUnderline", (handler, view) =>
             {
 #if ANDROID
@@ -32,6 +40,8 @@ namespace PlantCareMobile
                 handler.PlatformView.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
 #endif
             });
+            
+
             return builder.Build();
         }
     }

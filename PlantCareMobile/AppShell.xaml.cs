@@ -9,6 +9,8 @@ namespace PlantCareMobile
             InitializeComponent();
             Routing.RegisterRoute("LoginPage", typeof(LoginPage));
             Routing.RegisterRoute("RegisterPage", typeof(RegisterPage));
+            Routing.RegisterRoute(nameof(PlantsGalleryPage), typeof(PlantsGalleryPage));
+
         }
 
         private async void logoutButton_Clicked(object sender, EventArgs e)
