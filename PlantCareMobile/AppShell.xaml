@@ -42,37 +42,35 @@
 
     <FlyoutItem Title="Perfil"
                 Icon="profile_icon.png">
-        <ShellContent ContentTemplate="{DataTemplate views:ProfilePage}" />
+        <ShellContent Route="ProfilePage" ContentTemplate="{DataTemplate views:ProfilePage}" />
     </FlyoutItem>
 
     <FlyoutItem Title="Plantas"
                 Icon="gallery_icon.png">
-        <ShellContent ContentTemplate="{DataTemplate views:PlantsGalleryPage}" />
+        <ShellContent Route="PlantsGalleryPage" ContentTemplate="{DataTemplate views:PlantsGalleryPage}" />
     </FlyoutItem>
     
     <FlyoutItem Title="Recordatorios"
                 Icon="reminder_icon.png">
-        <ShellContent ContentTemplate="{DataTemplate views:RemindersPage}" />
+        <ShellContent Route="RemindersPage" ContentTemplate="{DataTemplate views:RemindersPage}" />
     </FlyoutItem>
-
-    
-
 
     <MenuItem Text=" "
               IsEnabled="False" />
 
     <FlyoutItem Title="Configuración"
                 Icon="setting_icon.png">
-        <ShellContent ContentTemplate="{DataTemplate views:SettingsPage}" />
+        <ShellContent Route="SettingsPage" ContentTemplate="{DataTemplate views:SettingsPage}" />
     </FlyoutItem>
 
     <FlyoutItem Title="Ayuda"
                 Icon="helpalt_icon.png">
-        <ShellContent ContentTemplate="{DataTemplate views:HelpPage}" />
+        <ShellContent Route="HelpPage" ContentTemplate="{DataTemplate views:HelpPage}" />
     </FlyoutItem>
+    
     <FlyoutItem Title="Acerca de"
                 Icon="about_icon.png">
-        <ShellContent ContentTemplate="{DataTemplate views:AboutPage}" />
+        <ShellContent Route="AboutPage" ContentTemplate="{DataTemplate views:AboutPage}" />
     </FlyoutItem>
 
     <Shell.FlyoutFooter>
@@ -88,6 +86,5 @@
                     Clicked="logoutButton_Clicked"/>
         </StackLayout>
     </Shell.FlyoutFooter>
-
 
 </Shell>

@@ -12,39 +12,12 @@ public partial class HomePage : ContentPage
     #endregion
 
     #region Constructor
-    private readonly PlantDatabase _db;
-
-
-    public HomePage(PlantDatabase db)
+    public HomePage()
     {
         InitializeComponent();
         plantService = new PlantIdentificationService();
-        _db = db;
     }
     #endregion
-
-    private async Task CargarPlantasEnJardin()
-    {
-        var plantas = await _db.ObtenerPlantasAsync();
-        ListaPlantas.ItemsSource = plantas;
-    }
-
-    protected override async void OnAppearing()
-    {
-        base.OnAppearing();
-        await CargarPlantasEnJardin();
-    }
-
-    private async void IrAGaleria(object sender, TappedEventArgs e)
-    {
-        await Navigation.PushAsync(new PlantsGalleryPage(_db));
-    }
-
-    private async void VerTodos_Tapped(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync(nameof(PlantsGalleryPage));
-    }
-
 
     #region Event Handlers
     private async void OnUploadAreaTapped(object sender, EventArgs e)
@@ -78,9 +51,22 @@ public partial class HomePage : ContentPage
     {
         await DisplayAlert("HELP", "VEN Y SANA MI DOLOOOOOOOOR, TU TIENES LA CURA DE ESTE AMOOO-OOOHR", "Pero que buena rola");
     }
+
+    // 🔥 NUEVO: Manejador para "Ver todos"
+    private async void OnVerTodosTapped(object sender, EventArgs e)
+    {
+        try
+        {
+            await Shell.Current.GoToAsync("//PlantsGalleryPage");
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Error al navegar: {ex.Message}", "OK");
+        }
+    }
     #endregion
 
-        #region Photo Methods
+    #region Photo Methods
     private async Task OnTakePhotoClicked()
     {
         try
@@ -199,28 +185,64 @@ public partial class HomePage : ContentPage
 
     private async Task SavePlant(PlantResult plant)
     {
-        if (plant?.Species == null)
-            return;
+        if (selectedImage == null || plant?.Species == null) return;
 
-        var nuevaPlanta = new Plant
+        try
         {
-            NombreCientifico = plant.Species.ScientificNameWithoutAuthor ?? "Desconocido",
-            NombreComun = plant.Species.CommonNames?.FirstOrDefault() ?? "Sin nombre",
-            PuntajeIdentificacion = plant.Score,
-            RutaImagen = selectedImage?.FullPath ?? string.Empty,
-            FechaGuardado = DateTime.Now
-        };
+            // Mostrar diálogo para ingresar ubicación
+            string location = await DisplayPromptAsync("Ubicación",
+                "¿Dónde está ubicada esta planta?",
+                "Guardar",
+                "Cancelar",
+                "Ej: Jardín, Sala, Balcón",
+                maxLength: 100);
 
-        await _db.AgregarPlantaAsync(nuevaPlanta);
+            if (location == null) return; // Usuario canceló
 
-        await DisplayAlert("✅ Éxito",
-            $"'{nuevaPlanta.NombreCientifico}' guardada en tu jardín",
-            "OK");
+            // Guardar imagen en almacenamiento local
+            var imagePath = await SaveImageToLocalStorage(selectedImage);
 
-        await CargarPlantasEnJardin();
+            // Crear objeto SavedPlant
+            var savedPlant = new SavedPlant
+            {
+                ScientificName = plant.Species.ScientificNameWithoutAuthor ?? "Desconocido",
+                CommonNames = plant.Species.CommonNames != null && plant.Species.CommonNames.Count > 0
+                    ? string.Join(", ", plant.Species.CommonNames)
+                    : "N/A",
+                Location = location,
+                ImagePath = imagePath,
+                Score = plant.Score,
+                DateAdded = DateTime.Now
+            };
+
+            // Guardar en base de datos
+            var dbService = new PlantDatabaseService();
+            await dbService.SavePlantAsync(savedPlant);
+
+            // 🔥 ENVIAR NOTIFICACIÓN DE QUE SE GUARDÓ UNA PLANTA
+            PlantMessenger.Send("PlantSaved", savedPlant);
+
+            await DisplayAlert("✅ Éxito",
+                $"'{savedPlant.ScientificName}' guardada en tu jardín",
+                "OK");
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"No se pudo guardar la planta: {ex.Message}", "OK");
+        }
     }
 
+    private async Task<string> SaveImageToLocalStorage(FileResult photo)
+    {
+        var fileName = $"{Guid.NewGuid()}.jpg";
+        var filePath = Path.Combine(FileSystem.AppDataDirectory, fileName);
 
+        using var sourceStream = await photo.OpenReadAsync();
+        using var fileStream = File.OpenWrite(filePath);
+        await sourceStream.CopyToAsync(fileStream);
+
+        return filePath;
+    }
     #endregion
 
     #region UI Helper Methods
@@ -233,9 +255,4 @@ public partial class HomePage : ContentPage
         }
     }
     #endregion
-
-
-   
-
-
 }

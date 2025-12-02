@@ -1,44 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:PlantCareMobile.ViewModels"
              x:Class="PlantCareMobile.Views.PlantsGalleryPage"
-             Title="Mi Jardín">
+             Title="Mis Plantas"
+             Shell.BackgroundColor="#101928">
 
-    <CollectionView x:Name="ListaPlantas"
-                    SelectionMode="Single"
-                    SelectionChanged="OnPlantaSeleccionada"
-                    Margin="10">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Border StrokeShape="RoundRectangle 10"
-        BackgroundColor="#203042"
-        Padding="10"
-        Margin="0,5">
+    <ContentPage.BindingContext>
+        <viewmodels:PlantsGalleryViewModel />
+    </ContentPage.BindingContext>
 
-                    <Grid ColumnDefinitions="*,Auto">
-                        <VerticalStackLayout>
-                            <Label Text="{Binding NombreCientifico}"
+    <Grid RowDefinitions="Auto,*" Padding="20">
+        
+        <!-- Header -->
+        <StackLayout Grid.Row="0" Spacing="10" Margin="0,0,0,20">
+            <Label Text="🌿 Mis Plantas"
+                   FontSize="32"
+                   FontAttributes="Bold"
+                   TextColor="#05DF73"
+                   HorizontalOptions="Start" />
+            
+            <Label Text="Tus plantas guardadas"
+                   FontSize="16"
+                   TextColor="#B0B0B0"
+                   HorizontalOptions="Start" />
+        </StackLayout>
+
+        <!-- Loading Indicator -->
+        <ActivityIndicator Grid.Row="1"
+                          IsRunning="{Binding IsLoading}"
+                          IsVisible="{Binding IsLoading}"
+                          Color="#05DF73"
+                          VerticalOptions="Center"
+                          HorizontalOptions="Center" />
+
+        <!-- Empty State -->
+        <StackLayout Grid.Row="1"
+                    IsVisible="{Binding HasPlants, Converter={StaticResource InvertedBoolConverter}}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Spacing="20">
+            <Label Text="🌱"
+                   FontSize="80"
+                   HorizontalOptions="Center" />
+            <Label Text="No tienes plantas guardadas"
+                   FontSize="20"
+                   FontAttributes="Bold"
                    TextColor="White"
-                   FontAttributes="Bold"/>
+                   HorizontalOptions="Center" />
+            <Label Text="Identifica plantas desde el inicio para comenzar tu colección"
+                   FontSize="14"
+                   TextColor="#B0B0B0"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   MaximumWidthRequest="300" />
+        </StackLayout>
 
-                            <Label Text="{Binding NombreComun}"
-                   TextColor="#A1A1A1"
-                   FontSize="12"/>
+        <!-- Carousel View -->
+        <CarouselView Grid.Row="1"
+                     ItemsSource="{Binding Plants}"
+                     IsVisible="{Binding HasPlants}"
+                     PeekAreaInsets="50"
+                     VerticalOptions="Center">
+            
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <Border BackgroundColor="#1E293B"
+                            StrokeThickness="0"
+                            Margin="10"
+                            HeightRequest="500">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20"/>
+                        </Border.StrokeShape>
+                        
+                        <Grid RowDefinitions="300,*">
+                            
+                            <!-- Imagen de la Planta -->
+                            <Border Grid.Row="0"
+                                   BackgroundColor="#2D3748"
+                                   StrokeThickness="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="20,20,0,0"/>
+                                </Border.StrokeShape>
+                                <Image Source="{Binding ImagePath}"
+                                      Aspect="AspectFill"
+                                      HeightRequest="300" />
+                            </Border>
 
-                            <Label Text="{Binding FechaGuardado}"
-                   TextColor="#6B7280"
-                   FontSize="10"/>
-                        </VerticalStackLayout>
+                            <!-- Información de la Planta -->
+                            <StackLayout Grid.Row="1"
+                                       Padding="20"
+                                       Spacing="15">
+                                
+                                <!-- Nombre Científico -->
+                                <Label Text="{Binding ScientificName}"
+                                      FontSize="24"
+                                      FontAttributes="Bold"
+                                      TextColor="#05DF73"
+                                      LineBreakMode="WordWrap"
+                                      MaxLines="2" />
 
-                        <!-- Botón eliminar -->
-                        <Button Grid.Column="1"
-                Text="🗑"
-                BackgroundColor="Transparent"
-                TextColor="#FF6B6B"
-                FontSize="20"
-                Clicked="EliminarPlanta_Clicked"/>
-                    </Grid>
-                </Border>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+                                <!-- Nombres Comunes -->
+                                <StackLayout Spacing="5">
+                                    <Label Text="Nombres comunes:"
+                                          FontSize="14"
+                                          TextColor="#B0B0B0" />
+                                    <Label Text="{Binding CommonNames}"
+                                          FontSize="16"
+                                          TextColor="White"
+                                          LineBreakMode="WordWrap"
+                                          MaxLines="2" />
+                                </StackLayout>
+
+                                <!-- Ubicación -->
+                                <StackLayout Spacing="5" IsVisible="{Binding Location, Converter={StaticResource StringNotEmptyConverter}}">
+                                    <Label Text="📍 Ubicación:"
+                                          FontSize="14"
+                                          TextColor="#B0B0B0" />
+                                    <Label Text="{Binding Location}"
+                                          FontSize="16"
+                                          TextColor="White"
+                                          LineBreakMode="WordWrap"
+                                          MaxLines="2" />
+                                </StackLayout>
+
+                                <!-- Fecha Agregada -->
+                                <Label Text="{Binding DateAdded, StringFormat='Agregada: {0:dd/MM/yyyy}'}"
+                                      FontSize="12"
+                                      TextColor="#64748B"
+                                      HorizontalOptions="Start" />
+
+                                <!-- Botón Eliminar -->
+                                <Button Text="🗑️ Eliminar"
+                                       Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PlantsGalleryViewModel}}, Path=DeletePlantCommand}"
+                                       CommandParameter="{Binding .}"
+                                       BackgroundColor="#A82B2B"
+                                       TextColor="White"
+                                       CornerRadius="10"
+                                       HeightRequest="45"
+                                       Margin="0,10,0,0" />
+                            </StackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+            
+            <CarouselView.ItemsLayout>
+                <LinearItemsLayout Orientation="Horizontal"
+                                  ItemSpacing="10" />
+            </CarouselView.ItemsLayout>
+        </CarouselView>
+    </Grid>
 </ContentPage>
