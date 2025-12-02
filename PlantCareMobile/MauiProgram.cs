@@ -20,7 +20,7 @@ namespace PlantCareMobile
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                     fonts.AddFont("Roboto-VariableFont_wdth_wght.ttf", "RobotoVar");
 
-                });
+                }); 
             
             // --- CONFIGURACIÓN DE LA API ---
             
@@ -35,6 +35,7 @@ namespace PlantCareMobile
 
             // --- REGISTRO DE SERVICIOS ---
             builder.Services.AddSingleton<PlantDatabaseService>(); // Tu servicio de base de datos local
+            builder.Services.AddSingleton<FirebaseAuthService>(); // Tu servicio de autenticación (FIREBASE)
             builder.Services.AddTransient<PlantsGalleryViewModel>(); // Tu ViewModel existente
             builder.Services.AddTransient<Views.PlantsGalleryPage>(); // Tu página existente
             builder.Services.AddTransient<ViewModels.HomeViewModel>();
