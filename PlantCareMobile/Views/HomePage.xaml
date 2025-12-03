@@ -20,7 +20,7 @@
                                   FontFamily="RobotoVar"
                                   FontAttributes="Bold"
                                   FontSize="28" />
-                            <Span Text="Andres"
+                            <Span Text="{Binding UserName}"
                                   FontFamily="RobotoVar"
                                   FontAttributes="Bold"
                                   FontSize="28" />

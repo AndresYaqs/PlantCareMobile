@@ -1,10 +1,13 @@
+using PlantCareMobile.ViewModels;
+
 namespace PlantCareMobile.Views;
 
 public partial class RegisterPage : ContentPage
 {
-    public RegisterPage()
+    public RegisterPage(LoginViewModel viewModel)
     {
         InitializeComponent();
+        BindingContext = viewModel;
     }
     private void YesNoShowPassImage_Tapped(object sender, TappedEventArgs e)
     {

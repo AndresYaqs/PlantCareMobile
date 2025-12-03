@@ -31,14 +31,14 @@
                     </Border>
                     <!--NOMBRE DEL USUARIO-->
                     <Label Grid.Column="1"
-                           Text="Andres"
+                           Text="{Binding UserName}"
                            FontAttributes="Bold"
                            FontSize="28" />
 
                     <!--CORREO ELECTRONICO DEL USUARIO-->
                     <Label Grid.Column="1"
                            Grid.Row="1"
-                           Text="1andresalex1@gmail.com" />
+                           Text="{Binding Email}" />
 
                     <!--ESTATUS DEL USUARIO (Verificado o no)-->
                     <Border Grid.Row="3"
@@ -96,7 +96,7 @@
                                        FontSize="14"
                                        FontFamily="RobotoVar" />
                                 <Label x:Name="lblContadorPlantas"
-                                       Text="0"
+                                       Text="{Binding UserPlantsCount}"
                                        TextColor="White"
                                        FontSize="32"
                                        FontAttributes="Bold"
@@ -136,7 +136,7 @@
                                        TextColor="#9CA3AF"
                                        FontSize="14"
                                        FontFamily="RobotoVar" />
-                                <Label Text="0"
+                                <Label Text="{Binding UserRemindersCount}"
                                        TextColor="White"
                                        FontSize="32"
                                        FontAttributes="Bold"
@@ -175,7 +175,7 @@
                                        TextColor="#9CA3AF"
                                        FontSize="14"
                                        FontFamily="RobotoVar" />
-                                <Label Text="0"
+                                <Label Text="No disponible"
                                        TextColor="White"
                                        FontSize="32"
                                        FontAttributes="Bold"
@@ -214,7 +214,7 @@
                                        TextColor="#9CA3AF"
                                        FontSize="14"
                                        FontFamily="RobotoVar" />
-                                <Label Text="0"
+                                <Label Text="No disponible"
                                        TextColor="White"
                                        FontSize="32"
                                        FontAttributes="Bold"
@@ -267,7 +267,7 @@
                                 StrokeThickness="0"
                                 BackgroundColor="#1F2937"
                                 Padding="15,5">
-                            <Entry Text="Andres"
+                            <Entry Text="{Binding UserName}"
                                    TextColor="White"
                                    Placeholder="Tu nombre"
                                    PlaceholderColor="#6B7280" />
@@ -283,7 +283,7 @@
                                 StrokeThickness="0"
                                 BackgroundColor="#374151"
                                 Padding="15,5">
-                            <Entry Text="1andresalex1@gmail.com"
+                            <Entry Text="{Binding Email}"
                                    TextColor="#9CA3AF"
                                    IsReadOnly="True" />
                         </Border>

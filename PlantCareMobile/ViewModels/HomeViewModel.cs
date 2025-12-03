@@ -8,8 +8,15 @@ namespace PlantCareMobile.ViewModels
 {
     public class HomeViewModel : INotifyPropertyChanged
     {
+        #region "Properties"
         private readonly PlantDatabaseService _databaseService;
-        
+
+        // --- Propiedades para manejo de usuario y peticiones
+        private string userName; // <-- Nombre de usuario
+        private readonly FirebaseAuthService _authService; // <-- Servicio de autenticación
+        private readonly ServerAPIService _serverapiService; // <-- Servicio SERVER BACKEND API
+
+
         // --- 1. Propiedades para "Mi Jardín" (Recientes) ---
         private ObservableCollection<SavedPlant> _recentPlants;
         private bool _hasPlants;
@@ -39,19 +46,26 @@ namespace PlantCareMobile.ViewModels
             get => _hasReminders;
             set { _hasReminders = value; OnPropertyChanged(); }
         }
+        public string UserName { get => userName; set => userName = value; }
 
-        public HomeViewModel(PlantDatabaseService databaseService)
+        #endregion
+
+        public HomeViewModel(PlantDatabaseService databaseService, FirebaseAuthService authService, ServerAPIService serverapiService)
         {
             _databaseService = databaseService;
             _recentPlants = new ObservableCollection<SavedPlant>();
             _plantsToWater = new ObservableCollection<SavedPlant>();
+            _authService = authService;
+            _serverapiService = serverapiService;
 
+            LoadUsername();
             PlantMessenger.Subscribe("PlantSaved", async (args) => await LoadDataAsync());
             
             // Carga inicial
             Task.Run(async () => await LoadDataAsync());
         }
 
+        #region "Methods"
         // Renombramos el método para que sea más general
         public async Task LoadDataAsync()
         {
@@ -86,6 +100,16 @@ namespace PlantCareMobile.ViewModels
             }
         }
 
+        private void LoadUsername()
+        {
+            UserName = _authService.GetCurrentUserDisplayName();
+            if (!string.IsNullOrEmpty(UserName) && UserName.Contains("@"))
+            {
+                UserName = _authService.GetCurrentUserEmail();
+                UserName = UserName.Split('@')[0];
+            }
+        }
+        #endregion
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

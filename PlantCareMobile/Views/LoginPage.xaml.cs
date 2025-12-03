@@ -1,15 +1,27 @@
+using PlantCareMobile.ViewModels;
+
 namespace PlantCareMobile.Views;
 
 public partial class LoginPage : ContentPage
 {
-	public LoginPage()
+	public LoginPage(LoginViewModel viewModel)
 	{
 		InitializeComponent();
-	}
+        BindingContext = viewModel;
+    }
 
     private async void forgotpasswordLabel_Tapped(object sender, TappedEventArgs e)
     {
-		await DisplayAlert("What a shame", "really dude?", "Yeah");
+        gotoForgotPasswordLabel.IsEnabled = false;
+        try
+        {
+            await Shell.Current.GoToAsync("/ForgotPasswordPage");
+        }
+        finally
+        {
+            gotoForgotPasswordLabel.IsEnabled = true;
+        }
+
     }
     private void YesNoShowPassImage_Tapped(object sender, TappedEventArgs e)
     {
