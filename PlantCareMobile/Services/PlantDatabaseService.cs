@@ -102,4 +102,56 @@ public class PlantDatabaseService
             throw;
         }
     }
+   
+
+    //Sincronizar con Server API
+    public async Task SyncPlantsFromApiAsync(List<SavedPlant> serverPlants)
+    {
+        try
+        {
+            await InitAsync();
+
+            // Opción A: InsertOrReplace (Más fácil)
+            // Recorremos la lista que llegó del servidor y actualizamos una por una
+            if (serverPlants != null && serverPlants.Count > 0)
+            {
+                // Ejecutamos todo en una transacción para que sea ultra rápido
+                await _database.RunInTransactionAsync(tran =>
+                {
+                    foreach (var plant in serverPlants)
+                    {
+                        // Esto actualiza si existe, o inserta si es nueva
+                        tran.InsertOrReplace(plant);
+                    }
+                });
+
+                System.Diagnostics.Debug.WriteLine($"🔄 Soft Sync completado: {serverPlants.Count} plantas actualizadas.");
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"❌ Error en Soft Sync: {ex.Message}");
+        }
+    }
+    public async Task ResetLocalDataAsync()
+    {
+        try
+        {
+            await InitAsync();
+
+            // 1. Borrar todos los registros de Plantas
+            await _database!.DeleteAllAsync<SavedPlant>();
+
+            // 2. Si tienes tabla de Recordatorios, bórrala también
+            // await _database!.DeleteAllAsync<Reminder>(); 
+
+            System.Diagnostics.Debug.WriteLine("🧹 Local database cleared successfully.");
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"❌ Error clearing database: {ex.Message}");
+            // No lanzamos throw para no detener el login si falla el borrado de caché
+        }
+    }
+
 }

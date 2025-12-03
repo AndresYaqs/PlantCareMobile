@@ -1,8 +1,9 @@
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using PlantCareMobile.Models;
 using PlantCareMobile.Services;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace PlantCareMobile.ViewModels
 {
@@ -15,7 +16,6 @@ namespace PlantCareMobile.ViewModels
         private string userName; // <-- Nombre de usuario
         private readonly FirebaseAuthService _authService; // <-- Servicio de autenticación
         private readonly ServerAPIService _serverapiService; // <-- Servicio SERVER BACKEND API
-
 
         // --- 1. Propiedades para "Mi Jardín" (Recientes) ---
         private ObservableCollection<SavedPlant> _recentPlants;
@@ -63,6 +63,7 @@ namespace PlantCareMobile.ViewModels
             
             // Carga inicial
             Task.Run(async () => await LoadDataAsync());
+            Task.Run(async () => await SincronizarConNube());
         }
 
         #region "Methods"
@@ -107,6 +108,43 @@ namespace PlantCareMobile.ViewModels
             {
                 UserName = _authService.GetCurrentUserEmail();
                 UserName = UserName.Split('@')[0];
+            }
+        }
+
+        private async Task SincronizarConNube()
+        {
+            try
+            {
+                // A. Traer datos frescos del servidor
+                // (Puedes poner un IsRefreshing = true aquí si usas RefreshView)
+                var remotePlants = await _serverapiService.GetUserPlantsAsync();
+
+                if (remotePlants != null)
+                {
+                    // B. Convertir y Actualizar la BD Local (Soft Sync)
+                    var localPlantsList = remotePlants.Select(r => new SavedPlant
+                    {
+                        ScientificName = r.ScientificName,
+                        CommonNames = r.CommonNames,
+                        Location = r.Location,
+                        Nickname = r.Nickname ?? "", // <--- Aquí guardamos el apodo
+                        ImagePath = r.ImagePath,
+                        Score = r.Score,
+                        DateAdded = r.DateAdded,
+                        SensorId = r.SensorId,
+                        LastWateredDate = r.LastWateredDate,
+                    }).ToList();
+
+                    await _databaseService.SyncPlantsFromApiAsync(localPlantsList);
+
+                    // C. Recargar la UI para mostrar los cambios
+                    // (Como SQLite ya se actualizó, volvemos a leer de ahí)
+                    await LoadDataAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error sincronizando: {ex.Message}");
             }
         }
         #endregion

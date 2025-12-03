@@ -20,7 +20,7 @@ public class SavedPlant : INotifyPropertyChanged
     public string Location { get; set; } = string.Empty;
 
     [MaxLength(500)]
-    public string ImagePath { get; set; } = string.Empty;
+    public string ImagePath { get; set; } = string.Empty; //MANTENER ASI
 
     public DateTime DateAdded { get; set; } = DateTime.Now;
 

@@ -1,4 +1,6 @@
-﻿using PlantCareMobile.Services;
+﻿using Microsoft.Maui.Devices.Sensors;
+using PlantCareMobile.Models;
+using PlantCareMobile.Services;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -7,8 +9,10 @@ namespace PlantCareMobile.ViewModels
 {
     public class LoginViewModel : INotifyPropertyChanged
     {
-        private readonly Services.FirebaseAuthService _authService;
+        #region "Properties"
+        private readonly FirebaseAuthService _authService;
         private readonly ServerAPIService _apiService;
+        private readonly PlantDatabaseService _localDBService;
 
         // CAMPOS PRIVADOS
         private string _email;
@@ -97,29 +101,38 @@ namespace PlantCareMobile.ViewModels
                 }
             }
         }
-
+        #endregion
+        #region "Commands"
         // 3. COMANDOS
         public ICommand LoginCommand { get; }
         public ICommand RegisterCommand { get; }
         public ICommand ForgotPasswordCommand { get; }
-
-        public LoginViewModel(FirebaseAuthService authService, ServerAPIService apiService)
+        #endregion
+        #region "Constructor"
+        public LoginViewModel(FirebaseAuthService authService, ServerAPIService apiService, PlantDatabaseService localDBService)
         {
             _authService = authService;
             _apiService = apiService;
+            _localDBService = localDBService;
 
             // Inicialización de Comandos
             LoginCommand = new Command(async () => await LoginAsync());
             RegisterCommand = new Command(async () => await RegisterAsync());
             ForgotPasswordCommand = new Command(async () => await ForgotPasswordAsync());
         }
-
+        #endregion
+        #region "Main Commands"
         // MÉTODOS DE LÓGICA (Comandos principales)
         private async Task LoginAsync()
         {
+            if (!await _apiService.CheckHealth()) {
+                ErrorMessage = "NO SE DETECTO CONEXION CON EL SERVIDOR";
+                return;
+            }
+
             if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password))
             {
-                
+
                 ErrorMessage = "Por favor completa todos los campos";
                 return;
             }
@@ -136,8 +149,38 @@ namespace PlantCareMobile.ViewModels
                     Console.WriteLine($"Usuario autenticado: {result.UserId}");
                     Console.WriteLine($"Token: {result.Token}");
 
-                    var plants = await _apiService.GetUserPlantsAsync();
-                    Console.WriteLine($"Plantas del usuario: {plants.Count}");
+                    //Limpiar DB LOCAL
+                    await _localDBService.ResetLocalDataAsync();
+
+                    //Logica para conseguir plantas y recordatorios del usuario
+
+                    // -- Traer datos del servidor a DB LOCAL
+                    var serverplants = await _apiService.GetUserPlantsAsync();
+
+                    if (serverplants != null && serverplants.Count > 0)
+                    {
+                        foreach (var remoteplant in serverplants)
+                        {
+                            var localPlant = new SavedPlant
+                            {
+                                ScientificName = remoteplant.ScientificName,
+                                CommonNames = remoteplant.CommonNames,
+                                Location = remoteplant.Location,
+                                Nickname = remoteplant.Nickname ?? "", // <--- Aquí guardamos el apodo
+                                ImagePath = remoteplant.ImagePath, // <--- Imagen hospedada publicamente en servidor
+                                Score = remoteplant.Score,
+                                DateAdded = remoteplant.DateAdded,
+                                SensorId = remoteplant.SensorId,
+                                LastWateredDate = remoteplant.LastWateredDate,
+
+                            };
+
+                            //Guardar planta en DB local (Descomentar)
+                            await _localDBService.SavePlantAsync(localPlant);
+                        }
+                    }
+
+                    Console.WriteLine($"Plantas del usuario: {serverplants.Count}");
 
                     await Shell.Current.GoToAsync("//HomePage");
                 }
@@ -158,6 +201,11 @@ namespace PlantCareMobile.ViewModels
 
         private async Task RegisterAsync()
         {
+            if (!await _apiService.CheckHealth())
+            {
+                ErrorMessage = "NO SE DETECTO CONEXION CON EL SERVIDOR";
+                return;
+            }
             if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password))
             {
                 ErrorMessage = "Por favor completa todos los campos";
@@ -193,6 +241,11 @@ namespace PlantCareMobile.ViewModels
 
         private async Task ForgotPasswordAsync()
         {
+            if (!await _apiService.CheckHealth())
+            {
+                ErrorMessage = "NO SE DETECTO CONEXION CON EL SERVIDOR";
+                return;
+            }
             if (string.IsNullOrWhiteSpace(Email))
             {
                 ErrorMessage = "Por favor ingresa tu correo electrónico";
@@ -228,8 +281,8 @@ namespace PlantCareMobile.ViewModels
                 IsBusy = false;
             }
         }
-
-
+        #endregion
+        #region "Event Handlers"
         // IMPLEMENTACIÓN DE INotifyPropertyChanged BOILERPLATE
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -237,6 +290,24 @@ namespace PlantCareMobile.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        #endregion
+        #region "Methods"
+        // MÉTODOS AUXILIARES (Solo Si se necesitan)
+        private void PrepareToLogin()
+        {
+            CleanLocalDB();
+            GetDataFromDB();
+        }
+        private bool CleanLocalDB()
+        {
+
+            return false;
+        }
+        private bool GetDataFromDB()
+        {
+            return false;
+        }
+
+        #endregion
     }
 }
-    

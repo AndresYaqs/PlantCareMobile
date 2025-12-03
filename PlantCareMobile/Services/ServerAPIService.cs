@@ -35,8 +35,32 @@ namespace PlantCareMobile.Services
             return true;
         }
 
+        public async Task<bool> CheckHealth()
+        {
+            try
+            {
+
+                _httpClient.Timeout = TimeSpan.FromSeconds(10);
+                var response = await _httpClient.GetAsync(BaseUrl);
+                if (response.IsSuccessStatusCode)
+                {
+                    // Opcional: Verificar que el mensaje sea "OK"
+                    var json = await response.Content.ReadAsStringAsync();
+                    // Aquí podrías usar JsonSerializer para asegurar que status == "OK"
+                    Console.WriteLine("Server Status: ONLINE - " + json);
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+               return false;
+            
+        }
+
         //Conseguir plantas del usuario
-        public async Task<List<Plant>> GetUserPlantsAsync()
+        public async Task<List<SavedPlant>> GetUserPlantsAsync()
         {
             
             try
@@ -48,7 +72,7 @@ namespace PlantCareMobile.Services
                 response.EnsureSuccessStatusCode();
 
                 var json = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<Plant>>(json);
+                return JsonSerializer.Deserialize<List<SavedPlant>>(json);
             }
             catch (Exception ex)
             {
@@ -58,7 +82,7 @@ namespace PlantCareMobile.Services
         }
 
         // Obtener una planta específica
-        public async Task<Plant> GetPlantByIdAsync(int plantId)
+        public async Task<SavedPlant> GetPlantByIdAsync(int plantId)
         {
             try
             {
@@ -69,7 +93,7 @@ namespace PlantCareMobile.Services
                 response.EnsureSuccessStatusCode();
 
                 var json = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<Plant>(json);
+                return JsonSerializer.Deserialize<SavedPlant>(json);
             }
             catch (HttpRequestException ex)
             {

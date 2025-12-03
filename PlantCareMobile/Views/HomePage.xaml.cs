@@ -213,6 +213,8 @@ public partial class HomePage : ContentPage
                 "Ej: Sr. Girasol",
                 maxLength: 50);
 
+           
+
             // Guardar imagen en almacenamiento local
             var imagePath = await SaveImageToLocalStorage(selectedImage);
 
@@ -230,8 +232,12 @@ public partial class HomePage : ContentPage
                 DateAdded = DateTime.Now
             };
 
-            // Guardar en base de datos
+            //Guardar en base de datos externa
+
+
+            // Guardar en base de datos local
             // Nota: Aquí creamos una instancia nueva del servicio si no lo inyectaste, para asegurar que funcione rápido.
+
             var dbService = new PlantDatabaseService(); 
             await dbService.SavePlantAsync(savedPlant);
 
