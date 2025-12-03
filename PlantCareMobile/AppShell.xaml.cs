@@ -9,6 +9,7 @@ namespace PlantCareMobile
             InitializeComponent();
             Routing.RegisterRoute("LoginPage", typeof(LoginPage));
             Routing.RegisterRoute("RegisterPage", typeof(RegisterPage));
+            Routing.RegisterRoute("ForgotPasswordPage", typeof(ForgotPasswordPage));
         }
 
         private async void logoutButton_Clicked(object sender, EventArgs e)

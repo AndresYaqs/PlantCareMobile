@@ -43,7 +43,10 @@
             <!--CAMPO PARA INSERTAR EMAIL-->
             <Border StrokeShape="RoundRectangle, 10"
                     Stroke="#FFFFFF"
-                    Padding="5">
+                    StrokeThickness="1"
+                    Padding="15,0"
+                    HeightRequest="50"
+                    >
                 <Grid ColumnDefinitions="Auto,*"
                       RowDefinitions="*">
                     <Image Source="email_icon.png"
@@ -54,14 +57,17 @@
                            Text="{Binding Email}"
                            Grid.Column="1"
                            Placeholder="Correo Electronico"
-                           Keyboard="Email" />
+                           Keyboard="Email"
+                           VerticalOptions="Center" />
                 </Grid>
             </Border>
 
             <!--CAMPO PARA INSERTAR CONTRASEÑA-->
             <Border StrokeShape="RoundRectangle, 10"
-                    Stroke="White"
-                    Padding="5"
+                    Stroke="#FFFFFF"
+                    StrokeThickness="1"
+                    Padding="15,0"
+                    HeightRequest="50"
                     Margin="0,10,0,0">
                 <Grid ColumnDefinitions="Auto,*, Auto"
                       RowDefinitions="*">
@@ -73,14 +79,15 @@
                            Text="{Binding Password}"
                            IsPassword="True"
                            Grid.Column="1"
-                           Placeholder="Contraseña" />
+                           Placeholder="Contraseña"
+                           VerticalOptions="Center" />
                     <Image x:Name="YesNoShowPassImage"
                            Grid.Column="2"
                            Source="showpassword_icon.png"
                            HeightRequest="25"
                            WidthRequest="25"
                            VerticalOptions="Center"
-                           HorizontalOptions="Center"
+                           HorizontalOptions="End"
                            Margin="0,0,10,0">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="YesNoShowPassImage_Tapped" />
@@ -101,7 +108,8 @@
                            VerticalOptions="Center" />
                 </StackLayout>
 
-                <Label Text="¿Olvidaste tu contraseña?"
+                <Label x:Name="gotoForgotPasswordLabel"
+                       Text="¿Olvidaste tu contraseña?"
                        Grid.Column="1"
                        TextColor="#05DF73"
                        HorizontalOptions="End"
@@ -113,25 +121,25 @@
                 </Label>
             </Grid>
 
-            
+
 
             <!--Boton para Iniciar Sesion-->
             <Button x:Name="loginButton"
+                    HeightRequest="40"
                     Text="Iniciar Sesion"
                     BackgroundColor="#008336"
-                    TextColor="White" 
+                    TextColor="White"
                     Margin="0,0,0,15"
-                    Command="{Binding LoginCommand}"/>
+                    Command="{Binding LoginCommand}" />
             <!--label NO TIENE CUENTA-->
             <Grid ColumnDefinitions="Auto,Auto"
                   HorizontalOptions="Center"
                   ColumnSpacing="7">
                 <Label Text="¿No tienes una cuenta?" />
                 <Label x:Name="gotoRegisterLabel"
-                    Grid.Column="1"
+                       Grid.Column="1"
                        Text="Regístrate"
-                       TextColor="#05DF73"
-                       >
+                       TextColor="#05DF73">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="GoToRegisterLabel_Tapped" />
                     </Label.GestureRecognizers>
@@ -147,8 +155,7 @@
                   IsVisible="{Binding HasErrorMessage}">
                 <Image Source="warning_loginregister_icon.png"
                        WidthRequest="12"
-                       HeightRequest="12" 
-                       />
+                       HeightRequest="12" />
                 <Label x:Name="errorMessageLabel"
                        Text="{Binding ErrorMessage}"
                        TextColor="Red"
@@ -159,7 +166,7 @@
             </Grid>
 
         </StackLayout>
-        
+
 
 
     </Grid>
