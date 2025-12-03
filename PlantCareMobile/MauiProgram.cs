@@ -36,12 +36,16 @@ namespace PlantCareMobile
             // --- REGISTRO DE SERVICIOS ---
             builder.Services.AddSingleton<PlantDatabaseService>(); // Tu servicio de base de datos local
             builder.Services.AddSingleton<FirebaseAuthService>(); // Tu servicio de autenticación (FIREBASE)
+            builder.Services.AddSingleton<ServerAPIService>(); // Tu servicio de API al servidor
             builder.Services.AddTransient<PlantsGalleryViewModel>(); // Tu ViewModel existente
             builder.Services.AddTransient<Views.PlantsGalleryPage>(); // Tu página existente
             builder.Services.AddTransient<ViewModels.HomeViewModel>();
             builder.Services.AddTransient<Views.HomePage>();
             builder.Services.AddTransient<ViewModels.RemindersViewModel>();
             builder.Services.AddTransient<Views.RemindersPage>();
+            builder.Services.AddTransient<LoginViewModel>(); //PARA PAGINA DE LOGIN
+            builder.Services.AddTransient<Views.LoginPage>(); //PARA PAGINA DE LOGIN
+
 
 #if DEBUG
             builder.Logging.AddDebug();

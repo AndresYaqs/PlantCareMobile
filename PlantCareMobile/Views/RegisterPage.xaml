@@ -51,6 +51,7 @@
                            WidthRequest="20"
                            Margin="0,0,5,0" />
                     <Entry x:Name="emailEntry"
+                           Text="{Binding Email}"
                            Grid.Column="1"
                            Placeholder="Correo Electronico"
                            Keyboard="Email" />
@@ -69,6 +70,7 @@
                            WidthRequest="20"
                            Margin="0,0,5,0" />
                     <Entry x:Name="passwordEntry"
+                           Text="{Binding Password}"
                            IsPassword="True"
                            Grid.Column="1"
                            Placeholder="Contraseña" />
@@ -89,6 +91,7 @@
             </Border>
 
             <Button x:Name="registerButton"
+                    Command="{Binding RegisterCommand }"
                     Text="Crear Cuenta"
                     BackgroundColor="#008336"
                     TextColor="White"

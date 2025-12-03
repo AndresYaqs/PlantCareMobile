@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace PlantCareMobile.ViewModels
 {
-    class LoginViewModel : INotifyPropertyChanged
+    public class LoginViewModel : INotifyPropertyChanged
     {
         private readonly Services.FirebaseAuthService _authService;
         private readonly ServerAPIService _apiService;
@@ -111,7 +111,7 @@ namespace PlantCareMobile.ViewModels
                     var plants = await _apiService.GetUserPlantsAsync();
                     Console.WriteLine($"Plantas del usuario: {plants.Count}");
 
-                    await Shell.Current.GoToAsync("//MainPage");
+                    await Shell.Current.GoToAsync("//HomePage");
                 }
                 else
                 {
