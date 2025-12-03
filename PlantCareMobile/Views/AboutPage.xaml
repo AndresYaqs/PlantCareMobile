@@ -2,14 +2,145 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PlantCareMobile.Views.AboutPage"
-             Title="Acerca de"
-             Shell.ForegroundColor="#05DF73"
-             Shell.BackgroundColor="#101928"
-             BackgroundColor="#101928">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Acerca de PlantCare"
+             BackgroundColor="#0F172A">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="25">
+
+            <!-- ENCABEZADO -->
+            <Border BackgroundColor="#1E293B"
+                    StrokeThickness="0"
+                    Padding="20"
+                    StrokeShape="RoundRectangle 20">
+                <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+
+                    <!-- Icono -->
+                    <Image Source="plant.png"
+                           WidthRequest="80"
+                           HeightRequest="80"/>
+
+                    <Label Text="PlantCare"
+                           FontSize="28"
+                           TextColor="White"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+
+                    <Label Text="Versión 1.0.0"
+                           FontSize="14"
+                           TextColor="#94A3B8"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Border>
+
+
+            <!-- DESCRIPCIÓN PRINCIPAL -->
+            <Border BackgroundColor="#1E293B"
+                    StrokeThickness="0"
+                    Padding="20"
+                    StrokeShape="RoundRectangle 20">
+
+                <VerticalStackLayout Spacing="10">
+
+                    <HorizontalStackLayout Spacing="8">
+                        <Label Text="💚" FontSize="20"/>
+                        <Label Text="Desarrollado con amor para los amantes de las plantas"
+                               FontSize="16"
+                               TextColor="White"
+                               FontAttributes="Bold"/>
+                    </HorizontalStackLayout>
+
+                    <Label Text="PlantCare es una aplicación diseñada para ayudarte a cuidar mejor tus plantas. Utiliza tecnología avanzada de IA para brindarte consejos personalizados y recordatorios útiles para mantener tus plantas saludables y prósperas."
+                           TextColor="#CBD5E1"
+                           FontSize="14"/>
+
+                    <!-- Estadísticas -->
+                    <Grid ColumnDefinitions="*,*" Padding="10" Margin="0,10,0,0">
+
+                        <VerticalStackLayout HorizontalOptions="Center">
+                            <Label Text="500+"
+                                   FontSize="20"
+                                   TextColor="#10B981"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"/>
+                            <Label Text="Plantas identificadas"
+                                   FontSize="12"
+                                   TextColor="#CBD5E1"
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center">
+                            <Label Text="1,200+"
+                                   FontSize="20"
+                                   TextColor="#10B981"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"/>
+                            <Label Text="Recordatorios enviados"
+                                   FontSize="12"
+                                   TextColor="#CBD5E1"
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+
+
+            <!-- SECCIÓN DE CARACTERÍSTICAS Y TECNOLOGÍA -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="20">
+
+                <!-- Características -->
+                <Border BackgroundColor="#0F3F2F"
+                        StrokeThickness="0"
+                        Padding="20"
+                        StrokeShape="RoundRectangle 20">
+
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="🌿  Características"
+                               FontSize="18"
+                               TextColor="#34D399"
+                               FontAttributes="Bold"/>
+
+                        <Label Text="• Identificación de plantas" TextColor="White"/>
+                        <Label Text="• Recordatorios personalizados" TextColor="White"/>
+                        <Label Text="• Consejos de cuidado" TextColor="White"/>
+                        <Label Text="• Galería de fotos" TextColor="White"/>
+                    </VerticalStackLayout>
+                </Border>
+
+
+                <!-- Tecnología -->
+                <Border BackgroundColor="#1E3A8A"
+                        Grid.Column="1"
+                        StrokeThickness="0"
+                        Padding="20"
+                        StrokeShape="RoundRectangle 20">
+
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="🛠️  Tecnología"
+                               FontSize="18"
+                               TextColor="#60A5FA"
+                               FontAttributes="Bold"/>
+
+                        <Label Text="• .NET MAUI" TextColor="White"/>
+                        <Label Text="• SQLite Local" TextColor="White"/>
+                        <Label Text="• Autenticación By Firebase" TextColor="White"/>
+                        <Label Text="• C# / XAML" TextColor="White"/>
+                    </VerticalStackLayout>
+                </Border>
+
+            </Grid>
+
+
+            <!-- PIE DE PÁGINA -->
+            <VerticalStackLayout HorizontalOptions="Center" Margin="0,20,0,20">
+                <Label Text="© 2025 PlantCare. Hecho con 🌱 para los amantes de las plantas."
+                       FontSize="12"
+                       TextColor="#64748B"
+                       HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
