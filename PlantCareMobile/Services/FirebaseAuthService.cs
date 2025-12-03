@@ -10,7 +10,7 @@ namespace PlantCareMobile.Services
 {
     public class FirebaseAuthService
     {
-        private const string _firebaseApiKey = "AIzaSyDw1FE35-BBDUnZcrmi3edjdLiLCskZ6Js";
+        private const string _firebaseApiKey = ""; //API PUBLICA DE FIREBASE AQUÍ
 
         private readonly FirebaseAuthClient _authClient;
         private UserCredential _userCredential;
