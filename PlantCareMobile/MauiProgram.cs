@@ -45,6 +45,8 @@ namespace PlantCareMobile
             builder.Services.AddTransient<Views.RemindersPage>();
             builder.Services.AddTransient<LoginViewModel>(); //PARA PAGINA DE LOGIN
             builder.Services.AddTransient<Views.LoginPage>(); //PARA PAGINA DE LOGIN
+            builder.Services.AddTransient<ProfileViewModel>(); //PARA PAGINA DE Profile
+            builder.Services.AddTransient<Views.ProfilePage>(); //PARA PAGINA DE Profile
 
 
 #if DEBUG

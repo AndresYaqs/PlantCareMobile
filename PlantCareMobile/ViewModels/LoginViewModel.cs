@@ -212,6 +212,7 @@ namespace PlantCareMobile.ViewModels
                         "Éxito",
                         "Se ha enviado un correo para restablecer tu contraseña",
                         "OK");
+                    await Shell.Current.GoToAsync("..");
                 }
                 else
                 {

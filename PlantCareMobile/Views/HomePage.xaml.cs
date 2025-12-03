@@ -11,20 +11,23 @@ public partial class HomePage : ContentPage
     private List<PlantResult>? identificationResults;
     private readonly PlantIdentificationService plantService;
     private readonly HomeViewModel _viewModel; // <--- Nueva variable para el ViewModel
+
     #endregion
     #region Constructor
     // Modificamos el constructor para recibir el ViewModel (Inyección)
-    public HomePage(HomeViewModel viewModel) 
+    public HomePage(HomeViewModel viewModel)
     {
         InitializeComponent();
-        
+
         _viewModel = viewModel;
         BindingContext = _viewModel; // <--- Conectamos los datos
 
         plantService = new PlantIdentificationService();
+        
     }
     #endregion
     #region Event Handlers
+
     private async void OnUploadAreaTapped(object sender, EventArgs e)
     {
         try

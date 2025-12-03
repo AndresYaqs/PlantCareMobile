@@ -111,6 +111,18 @@ namespace PlantCareMobile.Services
             return _userCredential?.User?.Info?.Email;
         }
 
+        public string GetCurrentUserDisplayName()
+        {
+            return _userCredential?.User?.Info?.DisplayName ?? _userCredential?.User?.Info?.Email;
+        }
+        public async Task UpdateUserNameAsync(string newName)
+        {
+            var user = _userCredential?.User;
+            if (user != null)
+            {
+                    await user.ChangeDisplayNameAsync(newName);
+            }
+        }
         // Cerrar sesión
         public void Logout()
         {
