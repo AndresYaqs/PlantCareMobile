@@ -1,6 +1,7 @@
 ﻿using PlantCareMobile.Models;
 using PlantCareMobile.Services;
 using PlantCareMobile.ViewModels;
+using System.Security.AccessControl;
 
 namespace PlantCareMobile.Views;
 
@@ -11,15 +12,16 @@ public partial class HomePage : ContentPage
     private List<PlantResult>? identificationResults;
     private readonly PlantIdentificationService plantService;
     private readonly HomeViewModel _viewModel; // <--- Nueva variable para el ViewModel
-
+    private readonly ServerAPIService _serverAPIService;
     #endregion
     #region Constructor
     // Modificamos el constructor para recibir el ViewModel (Inyección)
-    public HomePage(HomeViewModel viewModel)
+    public HomePage(HomeViewModel viewModel, ServerAPIService serverAPIService)
     {
         InitializeComponent();
 
         _viewModel = viewModel;
+        _serverAPIService = serverAPIService;
         BindingContext = _viewModel; // <--- Conectamos los datos
 
         plantService = new PlantIdentificationService();
@@ -232,9 +234,25 @@ public partial class HomePage : ContentPage
                 DateAdded = DateTime.Now
             };
 
-            //Guardar en base de datos externa
+            // 3. ENVIAR AL BACKEND
+            // Abrimos el stream de la imagen para enviarlo por red (Multer lo recibirá)
+            using var stream = await selectedImage.OpenReadAsync();
 
-
+            try
+            {
+                var newId = await _serverAPIService.CreatePlantAsync(
+                photoStream: stream,
+                fileName: selectedImage.FileName,
+                sciName: savedPlant.ScientificName,
+                commonName: savedPlant.CommonNames,
+                personalName: nickname, // Tu backend lo llama personalName
+                location: location);
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"{ex.Message}", "OK");
+            }
+            
             // Guardar en base de datos local
             // Nota: Aquí creamos una instancia nueva del servicio si no lo inyectaste, para asegurar que funcione rápido.
 
@@ -268,15 +286,15 @@ public partial class HomePage : ContentPage
     }
     #endregion
      #region Recordatorios
-    protected override async void OnAppearing()
-    {
-        base.OnAppearing();
-        // Recargar datos cada vez que entramos a esta pantalla
-        if (_viewModel != null)
-        {
-            await _viewModel.LoadDataAsync();
-        }
-    }
+    //protected override async void OnAppearing()
+    //{
+    //    base.OnAppearing();
+    //    // Recargar datos cada vez que entramos a esta pantalla
+    //    if (_viewModel != null)
+    //    {
+    //        await _viewModel.LoadDataAsync();
+    //    }
+    //}
     #endregion
     #region UI Helper Methods
     private void SetLoadingVisibility(bool isVisible)

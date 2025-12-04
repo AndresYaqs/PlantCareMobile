@@ -40,8 +40,8 @@ namespace PlantCareMobile.Services
             try
             {
 
-                _httpClient.Timeout = TimeSpan.FromSeconds(10);
-                var response = await _httpClient.GetAsync(BaseUrl);
+                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+                var response = await _httpClient.GetAsync(BaseUrl, cts.Token);
                 if (response.IsSuccessStatusCode)
                 {
                     // Opcional: Verificar que el mensaje sea "OK"
